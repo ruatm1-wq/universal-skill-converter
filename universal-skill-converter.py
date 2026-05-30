@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-⭐ Universal Skill Converter v2.0 — AI Agent 智能 Skill 生命周期管理引擎
+⭐ Universal Skill Converter v3.0 — AI Agent 智能 Skill 生命周期管理引擎
 Agent 通过 run_command 调用：安装/检测/同步/监控/转换
 """
 
@@ -8,7 +8,7 @@ import os, re, json, sys, shutil, time, glob as globmod
 from pathlib import Path
 from datetime import datetime
 
-VERSION = '2.0.0'
+VERSION = '3.5.0'
 
 # ═══════════════════════════════════════════════════════════
 # 格式注册表 — 所有支持的 AI Agent 格式
@@ -47,7 +47,7 @@ AGENTS = {
         'fields': ['name', 'description'],
         'defaults': {},
         'extra_files': {
-            'plugin.json': '{"name":"{name}","description":"{desc}","skills":["{name}"],"source":"./","strict":false}',
+            'plugin.json': '{{"name":"{name}","description":"{desc}","skills":["{name}"],"source":"./","strict":false}}',
         },
     },
     'openai-codex': {
@@ -58,7 +58,7 @@ AGENTS = {
         'fields': ['name', 'description'],
         'defaults': {},
         'extra_files': {
-            'plugin.json': '{"name":"{name}","description":"{desc}","skills":["{name}"],"source":"./","strict":false}',
+            'plugin.json': '{{"name":"{name}","description":"{desc}","skills":["{name}"],"source":"./","strict":false}}',
         },
     },
     'cursor': {
@@ -377,6 +377,7 @@ def render_skill(skill: dict, target_format: str, install_path: Path = None) -> 
         content = yaml + '\n\n' + body
         if install_path and 'extra_files' in agent:
             plugin = agent['extra_files']['plugin.json'].format(name=name, desc=desc)
+            install_path.parent.mkdir(parents=True, exist_ok=True)
             (install_path.parent / 'plugin.json').write_text(plugin, encoding='utf-8')
         return content
 
@@ -465,12 +466,15 @@ def get_target_path(agent_id: str, name: str, base_dir: str = None) -> Path:
 
 
 def validate_yaml(text: str) -> list:
-    """检查渲染后的 skill 文件基本语法正确性"""
+    """检查 YAML frontmatter 基本语法正确性（只检查 --- 之间的部分，不检查 body）"""
     errors = []
-    pairs = [('{', '}'), ('[', ']'), ('(', ')')]
+    # 只提取 frontmatter 部分（第一个 --- 到第二个 ---）
+    m = re.match(r'^---\s*\n(.*?)\n?---', text, re.DOTALL)
+    check_text = m.group(1) if m else ''
+    pairs = [('{', '}'), ('[', ']')]
     for o, c in pairs:
-        if text.count(o) != text.count(c):
-            errors.append(f'{o}/{c} 不匹配 ({text.count(o)} vs {text.count(c)})')
+        if check_text.count(o) != check_text.count(c):
+            errors.append(f'{o}/{c} 不匹配 ({check_text.count(o)} vs {check_text.count(c)})')
     return errors
 
 
