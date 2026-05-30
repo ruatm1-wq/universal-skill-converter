@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-⭐ Universal Skill Converter v3.0 — AI Agent 智能 Skill 生命周期管理引擎
+⭐ Universal Skill Converter v2.0 — AI Agent 智能 Skill 生命周期管理引擎
 Agent 通过 run_command 调用：安装/检测/同步/监控/转换
 """
 
@@ -8,7 +8,7 @@ import os, re, json, sys, shutil, time, glob as globmod
 from pathlib import Path
 from datetime import datetime
 
-VERSION = '3.5.0'
+VERSION = '2.0.0'
 
 # ═══════════════════════════════════════════════════════════
 # 格式注册表 — 所有支持的 AI Agent 格式

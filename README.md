@@ -18,7 +18,7 @@
 
 ### 📖 简介
 
-Universal Skill Converter 是一个**零依赖、单文件**的 Python 工具，能让你的 AI Agent skill 在 14 种主流格式之间自由转换。无论你是 Cursor 用户、Windsurf 开发者、Cline 爱好者还是 Reasonix 重度用户——同一个 skill 文件，一键同步到所有 Agent。
+Universal Skill Converter **v2.0** 是一个**零依赖、单文件**的 Python 工具，能让你的 AI Agent skill 在 14 种主流格式之间自由转换。无论你是 Cursor 用户、Windsurf 开发者、Cline 爱好者还是 Reasonix 重度用户——同一个 skill 文件，一键同步到所有 Agent。
 
 **一句话：写一次 skill，到处运行。**
 
@@ -121,7 +121,7 @@ run_skill("skill-converter", "install foo.md --to cursor,windsurf")
 
 ### 📖 Introduction
 
-**Universal Skill Converter** is a **zero-dependency, single-file** Python tool that freely converts AI Agent skills across 14 mainstream formats. Write your skill once, deploy everywhere.
+**Universal Skill Converter v2.0** is a **zero-dependency, single-file** Python tool that freely converts AI Agent skills across 14 mainstream formats. Write your skill once, deploy everywhere.
 
 ### ✨ Core Features
 
